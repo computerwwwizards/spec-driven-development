@@ -1,0 +1,10 @@
+body{
+  background-color: #191919;
+  color: white;
+}
+
+button{
+  background-color: transparent;
+  color: inherit;
+  cursor: pointer;
+}
