@@ -58,12 +58,12 @@ export type StepHandler = (variables: StepVariables, ctx: StepContext) => void |
  * registered pattern and the parsed Markdown before comparison, ensuring that 
  * inline code formatting does not cause brittle match failures.
  */
-export type StepRegistrationFn = (pattern: string, handler: StepHandler) => void;
+export type StepRegistrationFn = (pattern: string, handler: StepHandler) => Promise<void> | void;
 
 /**
  * A callback function providing the Step registration tool.
  */
-export type ScenarioBuilderCallback = (Step: StepRegistrationFn) => void;
+export type ScenarioBuilderCallback = (Step: StepRegistrationFn) => Promise<void> | void;
 
 /**
  * Configuration options for initializing a Feature engine.
@@ -169,5 +169,5 @@ export interface FeatureInstance {
  */
 export default function createFeature(
   config: FeatureConfig | string, 
-  builderCallback?: (Scenario: ScenarioRegistration) => void
+  builderCallback?: (Scenario: ScenarioRegistration) => Promise<void> | void
 ): FeatureInstance;
