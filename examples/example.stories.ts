@@ -43,13 +43,13 @@ export const Primary: Story = {
     const scenario = feature.Scenario("Text Encryption via Shift Execution Trigger", (Step) => {
       Step("Clear the active input text area container completely", hofStep(async () => {
         await actor.attemptsTo(
-          Clear.theValueOf(PageElement.located(By.css('textarea')))
+          Clear.theValueOf(PageElement.located(By.role('textbox')))
         );
       }));
 
       Step("Type the message {message} into the text field box", hofStep(async ({ message }) => {
         await actor.attemptsTo(
-          Enter.theValue(message).into(PageElement.located(By.css('textarea')))
+          Enter.theValue(message).into(PageElement.located(By.role('textbox')))
         );
       }));
 
@@ -60,8 +60,9 @@ export const Primary: Story = {
       }));
 
       Step("Verify that the output element container {id} displays the encrypted text value {value}", hofStep(async ({ id, value }) => {
+        const cleanId = id.startsWith('#') ? id.slice(1) : id;
         await actor.attemptsTo(
-          Ensure.that(Text.of(PageElement.located(By.css(id))), equals(value))
+          Ensure.that(Text.of(PageElement.located(By.id(cleanId))), equals(value))
         );
       }));
     });
