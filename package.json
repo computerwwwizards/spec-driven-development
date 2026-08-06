@@ -1,11 +1,19 @@
 {
 	"devDependencies": {
-		"vite": "^8.1.5",
-		"vitest": "^4.1.10",
+		"@storybook/addon-vitest": "^10.5.6",
+		"@storybook/html-vite": "^10.5.6",
 		"@types/node": "^26.1.1",
-		"typescript": "^7.0.2"
+		"@vitest/browser-preview": "^4.1.10",
+		"@vitest/ui": "4.1.10",
+		"@webcontainer/test": "^0.3.0",
+		"storybook": "^10.5.6",
+		"typescript": "^7.0.2",
+		"vite": "^8.1.5",
+		"vitest": "^4.1.10"
 	},
 	"scripts": {
-		"test": "vitest --run"
-	}
+		"test": "vitest --run",
+		"example:storybook": "storybook dev -p 6006"
+	},
+	"type": "module"
 }

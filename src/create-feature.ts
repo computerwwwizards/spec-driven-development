@@ -38,6 +38,7 @@ export interface ScenarioInstance {
   explicitId?: string;
   configure: (configModifier: (prev: FeatureConfig) => FeatureConfig) => void;
   Step: StepRegistrationFn;
+  run(): Promise<void>;
 }
 
 export interface ScenarioRegistration {
@@ -171,13 +172,13 @@ export default function createFeature(
         featureConfigOverrides
       }));
     }
-
+    // TODO: actually we dont need a scenario liek this, more liek a escutable complete scenario and teh scenario sextuable also has the same thigns as this scenario at teh same time, liek a merge progapate for all the code
     return {
       explicitId: scenarioConfig.id,
       configure: (modifier) => {
         featureConfigOverrides.push(modifier);
       },
-      Step
+      Step,
     };
   };
 
