@@ -1,8 +1,7 @@
 // @vitest-environment jsdom
 import { describe, it, expect, beforeEach } from 'vitest';
-import { actorCalled } from '@serenity-js/core';
 import { Click, Enter, Clear, Value, Text, By, PageElement, PageElements } from '@serenity-js/web';
-import { BrowseTheWebWithStorybook } from '../examples/serenity';
+import { StorybookActor } from '../examples/serenity';
 import { userEvent, within } from 'storybook/test';
 import { Primary } from '../examples/example.stories';
 import { initCipher } from '../examples/cipher';
@@ -42,8 +41,7 @@ describe('Storybook Serenity Web Adapter', () => {
 
         const canvas = within(container);
 
-        const actor = actorCalled('Tester')
-            .whoCan(BrowseTheWebWithStorybook.using(canvas, userEvent, container));
+        const actor = new StorybookActor('Tester', canvas, userEvent, container);
 
         // 1. Test Enter.theValue
         const textareaElement = PageElement.located(By.id('my-textarea'));

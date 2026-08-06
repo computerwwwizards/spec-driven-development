@@ -4,10 +4,9 @@ import html from './cipher.html?raw';
 import markdown from './spec.md?raw';
 import { initCipher } from './cipher';
 import createFeature from '../src/create-feature';
-import { actorCalled } from '@serenity-js/core';
 import { Clear, Enter, Click, Text, By, PageElement } from '@serenity-js/web';
 import { Ensure, equals } from '@serenity-js/assertions';
-import { BrowseTheWebWithStorybook } from './serenity';
+import { StorybookActor } from './serenity';
 
 const feature = createFeature(markdown);
 
@@ -33,8 +32,7 @@ type Story = StoryObj;
 
 export const Primary: Story = {
   play: async ({ canvas, userEvent, canvasElement, step }) => {
-    const actor = actorCalled('User')
-      .whoCan(BrowseTheWebWithStorybook.using(canvas, userEvent, canvasElement));
+    const actor = new StorybookActor('User', canvas, userEvent, canvasElement);
 
     const hofStep = (cb) => async (injectedParams, ctx) => {
       await step(ctx.currentStep.label, async () => await cb(injectedParams, ctx))

@@ -20,7 +20,8 @@ import {
 } from '@serenity-js/web';
 import {
     Question,
-    the
+    the,
+    Actor
 } from '@serenity-js/core';
 import { CorrelationId } from '@serenity-js/core/lib/model/index.js';
 import { within } from 'storybook/test';
@@ -472,7 +473,7 @@ export class StorybookPage extends Page<HTMLElement> {
             this.lastScriptResult = res;
             return res;
         }
-        const res = eval(script);
+        const res = new Function(`return (${script})`)() as Result;
         this.lastScriptResult = res;
         return res;
     }
@@ -485,7 +486,8 @@ export class StorybookPage extends Page<HTMLElement> {
             if (typeof script === 'function') {
                 script(...args, resolve);
             } else {
-                resolve(eval(script));
+                const res = new Function(`return (${script})`)() as Result;
+                resolve(res);
             }
         });
     }
@@ -552,5 +554,21 @@ export class BrowseTheWebWithStorybook extends BrowseTheWeb<HTMLElement> {
     static using(canvas: any, userEvent: any, canvasElement: HTMLElement): BrowseTheWebWithStorybook {
         const session = new StorybookBrowsingSession({ canvas, userEvent, canvasElement });
         return new BrowseTheWebWithStorybook(session);
+    }
+}
+
+export class StorybookActor extends Actor {
+    constructor(name: string, canvas: any, userEvent: any, canvasElement: HTMLElement) {
+        const mockStage: any = {
+            currentSceneId: () => ({ value: '1' }),
+            assignNewActivityId: () => ({ value: '1' }),
+            currentTime: () => Date.now(),
+            announce: () => {},
+            waitForNextCue: () => Promise.resolve(),
+            createError: (errorType: any, options: any) => new Error(options.message),
+        };
+        super(name, mockStage, [
+            BrowseTheWebWithStorybook.using(canvas, userEvent, canvasElement)
+        ]);
     }
 }
