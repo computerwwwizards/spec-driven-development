@@ -1,4 +1,5 @@
-import type { Meta, StoryObj } from "storybook";
+// @ts-ignore
+import type { Meta, StoryObj } from "@storybook/html";
 import html from './cipher.html?raw';
 import markdown from './spec.md?raw';
 import { initCipher } from './cipher';
@@ -28,7 +29,7 @@ export default meta;
 type Story = StoryObj;
 
 export const Primary: Story = {
-  play: async ({ canvas, userEvent, canvasElement, step }) => {
+  play: async ({ canvas, userEvent, canvasElement, step }: any) => {
     const actor = Actor.named("James").whoCan(
       BrowseWithStorybook.using({ userEvent, canvas, canvasElement })
     );
