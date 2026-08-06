@@ -1,4 +1,4 @@
-import { within, expect } from 'storybook/test';
+import { expect } from 'storybook/test';
 
 // --- Screenplay Core ---
 
@@ -83,8 +83,8 @@ export interface QueryOptions {
 export class By {
   constructor(
     public readonly description: string,
-    public readonly query: (container: HTMLElement) => HTMLElement | null,
-    public readonly queryAll?: (container: HTMLElement) => HTMLElement[]
+    public readonly query: (container: HTMLElement, canvas: any) => HTMLElement | null,
+    public readonly queryAll?: (container: HTMLElement, canvas: any) => HTMLElement[]
   ) {}
 
   static css(selector: string): By {
@@ -117,16 +117,30 @@ export class By {
   static role(roleName: string, options?: QueryOptions): By {
     return new By(
       `role "${roleName}"`,
-      (container) => {
+      (container, canvas) => {
+        if (!canvas && container) {
+          const selector = roleName === 'button' ? 'button, [role="button"]' : `[role="${roleName}"]`;
+          return container.querySelector(selector);
+        }
         try {
-          return within(container).getByRole(roleName, options);
+          if (canvas && typeof canvas.getByRole === 'function') {
+            return canvas.getByRole(roleName, options);
+          }
+          return null;
         } catch (e) {
           return null;
         }
       },
-      (container) => {
+      (container, canvas) => {
+        if (!canvas && container) {
+          const selector = roleName === 'button' ? 'button, [role="button"]' : `[role="${roleName}"]`;
+          return Array.from(container.querySelectorAll(selector));
+        }
         try {
-          return within(container).getAllByRole(roleName, options);
+          if (canvas && typeof canvas.getAllByRole === 'function') {
+            return canvas.getAllByRole(roleName, options);
+          }
+          return [];
         } catch (e) {
           return [];
         }
@@ -137,16 +151,41 @@ export class By {
   static text(textValue: string | RegExp, options?: QueryOptions): By {
     return new By(
       `text "${textValue}"`,
-      (container) => {
+      (container, canvas) => {
+        if (!canvas && container) {
+          const elements = Array.from(container.querySelectorAll('*'));
+          for (const el of elements) {
+            const text = el.textContent || '';
+            const matches = typeof textValue === 'string' ? text === textValue : textValue.test(text);
+            if (matches) return el as HTMLElement;
+          }
+          return null;
+        }
         try {
-          return within(container).getByText(textValue, options);
+          if (canvas && typeof canvas.getByText === 'function') {
+            return canvas.getByText(textValue, options);
+          }
+          return null;
         } catch (e) {
           return null;
         }
       },
-      (container) => {
+      (container, canvas) => {
+        if (!canvas && container) {
+          const results: HTMLElement[] = [];
+          const elements = Array.from(container.querySelectorAll('*'));
+          for (const el of elements) {
+            const text = el.textContent || '';
+            const matches = typeof textValue === 'string' ? text === textValue : textValue.test(text);
+            if (matches) results.push(el as HTMLElement);
+          }
+          return results;
+        }
         try {
-          return within(container).getAllByText(textValue, options);
+          if (canvas && typeof canvas.getAllByText === 'function') {
+            return canvas.getAllByText(textValue, options);
+          }
+          return [];
         } catch (e) {
           return [];
         }
@@ -157,16 +196,53 @@ export class By {
   static labelText(textValue: string | RegExp, options?: QueryOptions): By {
     return new By(
       `label text "${textValue}"`,
-      (container) => {
+      (container, canvas) => {
+        if (!canvas && container) {
+          const labels = Array.from(container.querySelectorAll('label'));
+          for (const label of labels) {
+            const text = label.textContent || '';
+            const matches = typeof textValue === 'string' ? text === textValue : textValue.test(text);
+            if (matches) {
+              const htmlFor = label.getAttribute('for');
+              if (htmlFor) {
+                const el = container.querySelector(`#${htmlFor}`);
+                if (el) return el as HTMLElement;
+              }
+            }
+          }
+          return null;
+        }
         try {
-          return within(container).getByLabelText(textValue, options);
+          if (canvas && typeof canvas.getByLabelText === 'function') {
+            return canvas.getByLabelText(textValue, options);
+          }
+          return null;
         } catch (e) {
           return null;
         }
       },
-      (container) => {
+      (container, canvas) => {
+        if (!canvas && container) {
+          const results: HTMLElement[] = [];
+          const labels = Array.from(container.querySelectorAll('label'));
+          for (const label of labels) {
+            const text = label.textContent || '';
+            const matches = typeof textValue === 'string' ? text === textValue : textValue.test(text);
+            if (matches) {
+              const htmlFor = label.getAttribute('for');
+              if (htmlFor) {
+                const el = container.querySelector(`#${htmlFor}`);
+                if (el) results.push(el as HTMLElement);
+              }
+            }
+          }
+          return results;
+        }
         try {
-          return within(container).getAllByLabelText(textValue, options);
+          if (canvas && typeof canvas.getAllByLabelText === 'function') {
+            return canvas.getAllByLabelText(textValue, options);
+          }
+          return [];
         } catch (e) {
           return [];
         }
@@ -177,16 +253,41 @@ export class By {
   static placeholderText(textValue: string | RegExp, options?: QueryOptions): By {
     return new By(
       `placeholder text "${textValue}"`,
-      (container) => {
+      (container, canvas) => {
+        if (!canvas && container) {
+          const elements = Array.from(container.querySelectorAll('[placeholder]'));
+          for (const el of elements) {
+            const placeholder = el.getAttribute('placeholder') || '';
+            const matches = typeof textValue === 'string' ? placeholder === textValue : textValue.test(placeholder);
+            if (matches) return el as HTMLElement;
+          }
+          return null;
+        }
         try {
-          return within(container).getByPlaceholderText(textValue, options);
+          if (canvas && typeof canvas.getByPlaceholderText === 'function') {
+            return canvas.getByPlaceholderText(textValue, options);
+          }
+          return null;
         } catch (e) {
           return null;
         }
       },
-      (container) => {
+      (container, canvas) => {
+        if (!canvas && container) {
+          const results: HTMLElement[] = [];
+          const elements = Array.from(container.querySelectorAll('[placeholder]'));
+          for (const el of elements) {
+            const placeholder = el.getAttribute('placeholder') || '';
+            const matches = typeof textValue === 'string' ? placeholder === textValue : textValue.test(placeholder);
+            if (matches) results.push(el as HTMLElement);
+          }
+          return results;
+        }
         try {
-          return within(container).getAllByPlaceholderText(textValue, options);
+          if (canvas && typeof canvas.getAllByPlaceholderText === 'function') {
+            return canvas.getAllByPlaceholderText(textValue, options);
+          }
+          return [];
         } catch (e) {
           return [];
         }
@@ -197,16 +298,30 @@ export class By {
   static testId(textValue: string | RegExp, options?: QueryOptions): By {
     return new By(
       `test id "${textValue}"`,
-      (container) => {
+      (container, canvas) => {
+        if (!canvas && container) {
+          const selector = `[data-testid="${textValue}"]`;
+          return container.querySelector(selector);
+        }
         try {
-          return within(container).getByTestId(textValue, options);
+          if (canvas && typeof canvas.getByTestId === 'function') {
+            return canvas.getByTestId(textValue, options);
+          }
+          return null;
         } catch (e) {
           return null;
         }
       },
-      (container) => {
+      (container, canvas) => {
+        if (!canvas && container) {
+          const selector = `[data-testid="${textValue}"]`;
+          return Array.from(container.querySelectorAll(selector));
+        }
         try {
-          return within(container).getAllByTestId(textValue, options);
+          if (canvas && typeof canvas.getAllByTestId === 'function') {
+            return canvas.getAllByTestId(textValue, options);
+          }
+          return [];
         } catch (e) {
           return [];
         }
@@ -234,7 +349,7 @@ export class PageElement {
   resolve(actor: Actor): HTMLElement {
     const ability = BrowseWithStorybook.as(actor);
     const parentElement = this.parent ? this.parent.resolve(actor) : ability.canvasElement;
-    const element = this.locator.query(parentElement);
+    const element = this.locator.query(parentElement, this.parent ? null : ability.canvas);
     if (!element) {
       throw new Error(`Unable to locate element described by ${this.toString()}`);
     }
@@ -265,9 +380,9 @@ export class PageElements {
     const ability = BrowseWithStorybook.as(actor);
     const parentElement = this.parent ? this.parent.resolve(actor) : ability.canvasElement;
     if (this.locator.queryAll) {
-      return this.locator.queryAll(parentElement);
+      return this.locator.queryAll(parentElement, this.parent ? null : ability.canvas);
     }
-    const single = this.locator.query(parentElement);
+    const single = this.locator.query(parentElement, this.parent ? null : ability.canvas);
     return single ? [single] : [];
   }
 
