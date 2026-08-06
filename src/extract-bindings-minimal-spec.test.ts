@@ -52,9 +52,11 @@ describe("Feature: Extract bindings from minimal spec", () => {
             const internalFeature = store.get<ReturnType<typeof createFeature>>("specification"); 
             const firstScenario = store.get<any>("firstScenario");
 
-            firstScenario.configure((_initialConfig: any) => ({
-              omitNonRegisteredSteps: true,
-            }));
+            const configuredScenario = firstScenario
+              .configure({ omitNonRegisteredSteps: true })
+              .configure((prev: any) => ({ ...prev }));
+
+            expect(configuredScenario).toBe(firstScenario);
 
             firstScenario.Step(currentStepInfo, (innerVars: StepVariables, innerCtx: StepContext) => {
               console.log(`[Test Assertion] Variables matched inside inner execution!`);

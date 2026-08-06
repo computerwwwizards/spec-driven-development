@@ -76,16 +76,21 @@ export interface FeatureConfig {
 }
 
 /**
- * An isolated, executable unit representing a single Markdown Scenario.
- * Designed to be passed to external test runners (e.g., Vitest, Jest).
+ * A merged representation of an isolated, executable unit representing a single Markdown Scenario.
  */
-export interface ExecutableScenario {
-  /** A deterministic slug or explicitly provided identifier. */
-  id: string;
+export interface Scenario {
+  /** The deterministic slug or explicitly provided identifier. */
+  readonly id: string;
   /** The cleaned title of the scenario, stripped of tags. */
-  title: string;
+  readonly title: string;
   /** Extracted metadata tags (e.g., ['smoke', 'e2e']). */
-  tags: string[];
+  readonly tags: string[];
+  /** The isolated store initialized for the execution of this scenario. */
+  readonly store: Store;
+  /** Merges new configuration values into the current scenario scope. */
+  configure: (configModifier: Partial<FeatureConfig> | ((prev: FeatureConfig) => FeatureConfig)) => Scenario;
+  /** Registers a step specifically within the scope of this Scenario. */
+  Step: StepRegistrationFn;
   /**
    * Triggers the evaluation of this specific scenario's steps.
    * 
@@ -110,18 +115,6 @@ export interface ScenarioConfig {
 }
 
 /**
- * The instance returned by registering a Scenario, allowing further configuration.
- */
-export interface ScenarioInstance {
-  /** The explicitly provided ID, if configured via the object signature. */
-  explicitId?: string;
-  /** Merges new configuration values into the current scenario scope. */
-  configure: (configModifier: (prev: FeatureConfig) => FeatureConfig) => void;
-  /** Registers a step specifically within the scope of this Scenario. */
-  Step: StepRegistrationFn;
-}
-
-/**
  * Registers a Scenario within the Feature engine.
  * Supports polymorphic signatures (String Pattern vs Configuration Object).
  */
@@ -132,14 +125,14 @@ export interface ScenarioRegistration {
    * @example
    * Scenario("User attempts to login", (Step) => { ... });
    */
-  (pattern: string, stepBuilder?: ScenarioBuilderCallback): ScenarioInstance;
+  (pattern: string, stepBuilder?: ScenarioBuilderCallback): Scenario;
   /**
    * Registers a scenario using a configuration object to provide an explicit ID.
    * 
    * @example
    * Scenario({ match: "User attempts to login", id: "AUTH-01" }, (Step) => { ... });
    */
-  (config: ScenarioConfig, stepBuilder?: ScenarioBuilderCallback): ScenarioInstance;
+  (config: ScenarioConfig, stepBuilder?: ScenarioBuilderCallback): Scenario;
 }
 
 /**
@@ -151,7 +144,7 @@ export interface FeatureInstance {
    * An iterable Hash Map of scenarios, indexed by their ID.
    * Enables O(1) lookups for targeted execution to avoid recursive loops.
    */
-  scenarios: Map<string, ExecutableScenario>;
+  scenarios: Map<string, Scenario>;
   /**
    * The dynamic registration API. Exposed to allow Just-In-Time (JIT) 
    * meta-testing and late-binding configurations.
