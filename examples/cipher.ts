@@ -1,18 +1,21 @@
 
-export function initCipher(document: Document){
+export function initCipher(document: Document | DocumentFragment){
   const mainForm = document.querySelector("form")
   const aside = document.querySelector("aside")
   mainForm?.addEventListener("submit", (event)=>{
     event.preventDefault();
     const {target, submitter} = event;
     
-    const data = new FormData(target, submitter);
+    const data = new FormData(target as HTMLFormElement, submitter);
     const action = data.get("action")
     const content = data.get("content")
   
     const direction = action === 'cipher' ? 1: -1;
+    const contentStr = typeof content === 'string' ? content : '';
   
-    aside.textContent = cipher(content, direction*3);
+    if (aside) {
+      aside.textContent = cipher(contentStr, direction*3);
+    }
   })
 }
 

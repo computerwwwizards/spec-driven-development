@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "storybook";
+import type { Meta, StoryObj } from "@storybook/html-vite";
 import html from './cipher.html?raw';
 import markdown from './spec.md?raw';
 import { initCipher } from './cipher';
@@ -33,7 +33,8 @@ export const Primary: Story = {
       BrowseWithStorybook.using({ userEvent, canvas, canvasElement })
     );
 
-    const hofStep = (cb: (injectedParams: any, ctx: any) => Promise<void> | void) => async (injectedParams: any, ctx: any) => {
+    //@ts-expect-error typing for later
+    const hofStep = (cb: (injectedParams, ctx) => Promise<void> | void) => async (injectedParams, ctx) => {
       await step(ctx.currentStep.label, async () => await cb(injectedParams, ctx));
     };
 
