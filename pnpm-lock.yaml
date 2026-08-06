@@ -8,6 +8,9 @@ devDependencies:
   '@serenity-js/core':
     specifier: ^3.44.1
     version: 3.44.1
+  '@serenity-js/web':
+    specifier: ^3.44.1
+    version: 3.44.1
   '@storybook/addon-vitest':
     specifier: ^10.5.6
     version: 10.5.7(react@19.2.8)(storybook@10.5.7)(vitest@4.1.10)
@@ -928,6 +931,14 @@ packages:
     resolution: {integrity: sha512-2j9bGt5Jh8hj+vPtgzPtl72j0yRxHAyumoo6TNfAjsLB04UtpSvPbPcDcBMxz7n+9CYB0c1GxQFxYRg2jimqGw==}
     dev: true
 
+  /@serenity-js/assertions@3.44.1:
+    resolution: {integrity: sha512-yKinFIvxcpGKtQWXobBsubKh0AzMRGDyhDufB+9f9AWCGHg73bDsgyTCoS/RYjnz50VMbt9e4tq+L+296LjFBw==}
+    engines: {node: '>=22.12 || ^24'}
+    dependencies:
+      '@serenity-js/core': 3.44.1
+      tiny-types: 2.0.5
+    dev: true
+
   /@serenity-js/core@3.44.1:
     resolution: {integrity: sha512-Jl5GWNLNSMvsPpmZjNSg34k2Q2MgZVXi2M2vwGDNGqwbCDKBOo9HlyTlQZigI/faahnclQgpBQOQ08/iZRMbFg==}
     engines: {node: '>=22.12 || ^24'}
@@ -943,6 +954,15 @@ packages:
       tiny-types: 2.0.5
       upath: 2.0.1
       validate-npm-package-name: 7.0.2
+    dev: true
+
+  /@serenity-js/web@3.44.1:
+    resolution: {integrity: sha512-P24x1RPbc0YiapHOc4qds/kKd1qaS9HE60f4/yCohucl6R9gVswPJlzpHgpOctGqDHhlb7jj3x7Xi9Z069bwfg==}
+    engines: {node: '>=22.12 || ^24'}
+    dependencies:
+      '@serenity-js/assertions': 3.44.1
+      '@serenity-js/core': 3.44.1
+      tiny-types: 2.0.5
     dev: true
 
   /@standard-schema/spec@1.1.0:
@@ -1938,6 +1958,8 @@ packages:
       lightningcss-win32-arm64-msvc: 1.33.0
       lightningcss-win32-x64-msvc: 1.33.0
     dev: true
+    bundledDependencies:
+      - napi-wasm
 
   /loupe@3.2.1:
     resolution: {integrity: sha512-CdzqowRJCeLU72bHvWqwRBBlLcMEtIvGrlvef74kMnV2AolS9Y8xUv1I0U/MNAWMhBlKIoyuEgoJ0t/bbwHbLQ==}

@@ -1,6 +1,7 @@
 {
 	"devDependencies": {
 		"@serenity-js/core": "^3.44.1",
+		"@serenity-js/web": "^3.44.1",
 		"@storybook/addon-vitest": "^10.5.6",
 		"@storybook/html-vite": "^10.5.6",
 		"@types/node": "^26.1.1",
