@@ -40,16 +40,18 @@ export const Primary: Story = {
       await step(ctx.currentStep.label, async () => await cb(injectedParams, ctx))
     }
 
+    const textareaField = PageElement.located(By.role('textbox'));
+
     const scenario = feature.Scenario("Text Encryption via Shift Execution Trigger", (Step) => {
       Step("Clear the active input text area container completely", hofStep(async () => {
         await actor.attemptsTo(
-          Clear.theValueOf(PageElement.located(By.role('textbox')))
+          Clear.theValueOf(textareaField)
         );
       }));
 
       Step("Type the message {message} into the text field box", hofStep(async ({ message }) => {
         await actor.attemptsTo(
-          Enter.theValue(message).into(PageElement.located(By.role('textbox')))
+          Enter.theValue(message).into(textareaField)
         );
       }));
 
