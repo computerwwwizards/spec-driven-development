@@ -36,7 +36,7 @@ export const Primary: Story = {
       await step(ctx.currentStep.label, async ()=>await cb(injectedParams, ctx))
     }
 
-    feature.Scenario("Text Encryption via Shift Execution Trigger", (Step) => {
+    const scenario = feature.Scenario("Text Encryption via Shift Execution Trigger", (Step) => {
       Step("Clear the active input text area container completely", hofStep(async (_, { currentStep }) => {
         await userEvent.clear(textarea);
       }));
@@ -56,8 +56,6 @@ export const Primary: Story = {
       }));
     });
     
-    for (const scenario of feature.scenarios.values()) {
-      await scenario.run();
-    }
+    await scenario.run()
   },
 };

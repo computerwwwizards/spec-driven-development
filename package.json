@@ -16,5 +16,6 @@
 		"test": "vitest --run",
 		"example:storybook": "storybook dev -p 6006"
 	},
-	"type": "module"
+	"type": "module",
+	"packageManager": "pnpm@11.19.0"
 }
