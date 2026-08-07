@@ -1,0 +1,28 @@
+{
+  "name": "@computerwwwizards/screenplay-storybook",
+  "version": "0.1.0",
+  "description": "Lightweight Screenplay Pattern DSL (Actor/Ability/Question/Performable) targeting Storybook interaction tests.",
+  "type": "module",
+  "main": "./src/serenity.ts",
+  "types": "./src/serenity.ts",
+  "exports": {
+    ".": "./src/serenity.ts"
+  },
+  "files": [
+    "src",
+    "!src/**/*.test.ts"
+  ],
+  "scripts": {
+    "test": "vitest --run"
+  },
+  "peerDependencies": {
+    "storybook": "^10.5.6"
+  },
+  "devDependencies": {
+    "storybook": "^10.5.6",
+    "happy-dom": "^20.11.1",
+    "typescript": "^7.0.2",
+    "vite": "^8.1.5",
+    "vitest": "^4.1.10"
+  }
+}

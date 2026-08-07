@@ -1,12 +1,8 @@
 {
-    "compilerOptions": {
-      "noImplicitAny": true,
-      "strict": true,
-      "noEmit": true,
-      "module": "ESNext",
-      "moduleResolution": "bundler",
-      "allowImportingTsExtensions": true,
-      "skipLibCheck": true
-    },
-    "include": ["**/*"]
+  "files": [],
+  "references": [
+    { "path": "./packages/step-binder" },
+    { "path": "./packages/screenplay-storybook" },
+    { "path": "./examples/storybook-demo" }
+  ]
 }

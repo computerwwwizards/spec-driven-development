@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+      "noImplicitAny": true,
+      "strict": true,
+      "noEmit": true,
+      "module": "ESNext",
+      "moduleResolution": "bundler",
+      "allowImportingTsExtensions": true,
+      "skipLibCheck": true
+    }
+}
