@@ -6,7 +6,7 @@
   },
   "include": ["**/*"],
   "references": [
-    { "path": "../../packages/step-binder" },
+    { "path": "../../packages/spec-glue" },
     { "path": "../../packages/screenplay-storybook" }
   ]
 }

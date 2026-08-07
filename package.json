@@ -5,7 +5,7 @@
 	"packageManager": "pnpm@11.19.0",
 	"scripts": {
 		"test": "vitest --run",
-		"test:step-binder": "pnpm --filter @computerwwwizards/step-binder test",
+		"test:spec-glue": "pnpm --filter @computerwwwizards/spec-glue test",
 		"test:screenplay-storybook": "pnpm --filter @computerwwwizards/screenplay-storybook test",
 		"example:storybook": "pnpm --filter storybook-demo example:storybook"
 	},

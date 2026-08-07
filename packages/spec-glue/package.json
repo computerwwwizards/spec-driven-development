@@ -1,5 +1,5 @@
 {
-  "name": "@computerwwwizards/step-binder",
+  "name": "@computerwwwizards/spec-glue",
   "version": "0.1.0",
   "description": "Binds implementation handlers to Markdown-declared spec steps (Scenario/Step pattern matching and execution).",
   "type": "module",
