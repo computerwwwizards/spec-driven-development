@@ -2,8 +2,8 @@ import type { Meta, StoryObj } from "@storybook/html-vite";
 import html from './cipher.html?raw';
 import markdown from './spec.md?raw';
 import { initCipher } from './cipher';
-import createFeature from '../src/create-feature';
-import { Actor, BrowseWithStorybook, PageElement, By, Clear, Enter, Click, Text, Ensure, isEqualTo } from './serenity';
+import createFeature from '@computerwwwizards/step-binder';
+import { Actor, BrowseWithStorybook, PageElement, By, Clear, Enter, Click, Text, Ensure, isEqualTo } from '@computerwwwizards/screenplay-storybook';
 
 const feature = createFeature(markdown);
 

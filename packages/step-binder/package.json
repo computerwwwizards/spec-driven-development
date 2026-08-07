@@ -1,0 +1,24 @@
+{
+  "name": "@computerwwwizards/step-binder",
+  "version": "0.1.0",
+  "description": "Binds implementation handlers to Markdown-declared spec steps (Scenario/Step pattern matching and execution).",
+  "type": "module",
+  "main": "./src/create-feature.ts",
+  "types": "./src/create-feature.ts",
+  "exports": {
+    ".": "./src/create-feature.ts"
+  },
+  "files": [
+    "src",
+    "!src/**/*.test.ts",
+    "!src/**/*.spec.md"
+  ],
+  "scripts": {
+    "test": "vitest --run"
+  },
+  "devDependencies": {
+    "typescript": "^7.0.2",
+    "vite": "^8.1.5",
+    "vitest": "^4.1.10"
+  }
+}

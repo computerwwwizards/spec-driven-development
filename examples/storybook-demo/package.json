@@ -1,0 +1,20 @@
+{
+  "name": "storybook-demo",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "example:storybook": "storybook dev -p 6006 -c .storybook"
+  },
+  "dependencies": {
+    "@computerwwwizards/step-binder": "workspace:*",
+    "@computerwwwizards/screenplay-storybook": "workspace:*"
+  },
+  "devDependencies": {
+    "@storybook/html-vite": "^10.5.6",
+    "@storybook/addon-vitest": "^10.5.6",
+    "storybook": "^10.5.6",
+    "typescript": "^7.0.2",
+    "vite": "^8.1.5"
+  }
+}
