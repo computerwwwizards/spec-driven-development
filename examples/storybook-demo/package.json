@@ -7,7 +7,7 @@
     "example:storybook": "storybook dev -p 6006 -c .storybook"
   },
   "dependencies": {
-    "@computerwwwizards/step-binder": "workspace:*",
+    "@computerwwwizards/spec-glue": "workspace:*",
     "@computerwwwizards/screenplay-storybook": "workspace:*"
   },
   "devDependencies": {

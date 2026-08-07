@@ -35,9 +35,9 @@ importers:
       '@computerwwwizards/screenplay-storybook':
         specifier: workspace:*
         version: link:../../packages/screenplay-storybook
-      '@computerwwwizards/step-binder':
+      '@computerwwwizards/spec-glue':
         specifier: workspace:*
-        version: link:../../packages/step-binder
+        version: link:../../packages/spec-glue
     devDependencies:
       '@storybook/addon-vitest':
         specifier: ^10.5.6
@@ -73,7 +73,7 @@ importers:
         specifier: ^4.1.10
         version: 4.1.10(@types/node@26.1.2)(@vitest/browser-preview@4.1.10)(@vitest/ui@4.1.10)(happy-dom@20.11.1)(vite@8.2.0(@types/node@26.1.2)(esbuild@0.28.1))
 
-  packages/step-binder:
+  packages/spec-glue:
     devDependencies:
       typescript:
         specifier: ^7.0.2
