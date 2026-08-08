@@ -4,7 +4,10 @@
     "composite": true,
     "noEmit": false,
     "emitDeclarationOnly": true,
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "tsBuildInfoFile": "./node_modules/.cache/tsbuildinfo"
   },
-  "include": ["src/**/*", "vite-env.d.ts"]
+  "include": ["src/**/*", "vite-env.d.ts"],
+  "exclude": ["src/**/*.test.ts", "src/**/*.spec.ts"]
 }
