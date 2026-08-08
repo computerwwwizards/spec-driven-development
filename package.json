@@ -7,9 +7,14 @@
 		"test": "vitest --run",
 		"test:spec-glue": "pnpm --filter @computerwwwizards/spec-glue test",
 		"test:screenplay-storybook": "pnpm --filter @computerwwwizards/screenplay-storybook test",
-		"example:storybook": "pnpm --filter storybook-demo example:storybook"
+		"example:storybook": "pnpm --filter storybook-demo example:storybook",
+		"build": "pnpm --filter './packages/*' build",
+		"changeset": "changeset",
+		"version": "changeset version",
+		"release": "pnpm build && changeset publish"
 	},
 	"devDependencies": {
+		"@changesets/cli": "^2.31.1",
 		"@types/node": "^26.1.1",
 		"@vitest/browser-preview": "^4.1.10",
 		"@vitest/ui": "4.1.10",
